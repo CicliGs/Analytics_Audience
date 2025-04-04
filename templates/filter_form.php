@@ -1,36 +1,36 @@
-<form method="GET" action="index.php" class="mb-4 p-4 border rounded shadow-sm bg-light">
+<form method="POST" action="index.php" class="mb-4 p-4 border rounded shadow-sm bg-light">
     <div class="row mb-3">
         <div class="col">
-            <input type="text" name="country" class="form-control" placeholder="Country">
+            <input type="text" name="country" class="form-control" placeholder="Country" value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">
         </div>
         <div class="col">
-            <input type="text" name="city" class="form-control" placeholder="City">
+            <input type="text" name="city" class="form-control" placeholder="City" value="<?= htmlspecialchars($_POST['city'] ?? '') ?>">
         </div>
         <div class="col">
             <select name="isActive" class="form-control">
                 <option value="">Is Active</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+                <option value="1" <?= ($_POST['isActive'] ?? '') === '1' ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= ($_POST['isActive'] ?? '') === '0' ? 'selected' : '' ?>>No</option>
             </select>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col">
-            <input type="text" name="gender" class="form-control" placeholder="Gender">
+            <input type="text" name="gender" class="form-control" placeholder="Gender" value="<?= htmlspecialchars($_POST['gender'] ?? '') ?>">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col">
             <select name="hasChildren" class="form-control">
                 <option value="">Has Children</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+                <option value="1" <?= ($_POST['hasChildren'] ?? '') === '1' ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= ($_POST['hasChildren'] ?? '') === '0' ? 'selected' : '' ?>>No</option>
             </select>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col">
-            <input type="text" name="familyStatus" class="form-control" placeholder="Family Status">
+            <input type="text" name="familyStatus" class="form-control" placeholder="Family Status" value="<?= htmlspecialchars($_POST['familyStatus'] ?? '') ?>">
         </div>
     </div>
     <div class="row">
