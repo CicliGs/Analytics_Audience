@@ -8,7 +8,7 @@ use App\Filter\FilterInteraction\FilterPool;
 use App\Filter\FilterRegistry;
 use App\UserRepository;
 use Core\csv\CsvParser;
-use Core\database\DatabaseConfig;
+use Core\Database\DatabaseConfig;
 use Dotenv\Dotenv;
 use PDO;
 

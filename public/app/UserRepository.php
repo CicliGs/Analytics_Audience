@@ -32,11 +32,6 @@ class UserRepository
         $this->csvParser = $csvParser;
     }
 
-    /**
-     * Imports user data from a CSV file
-     * @param string $csvFile Path to the CSV file
-     * @throws \Exception If file cannot be opened
-     */
     public function importFromCsv(string $csvFile): void
     {
         $data = $this->csvParser->parse($csvFile);
@@ -47,10 +42,6 @@ class UserRepository
         }
     }
 
-    /**
-     * Filters users based on provided filter data
-     * @return array The filtered users
-     */
     public function filterUsers(): array
     {
         $query = "SELECT * FROM users";
@@ -77,10 +68,6 @@ class UserRepository
         ];
     }
 
-    /**
-     * Prepares the INSERT statement for CSV import
-     * @return PDOStatement
-     */
     private function prepareInsertStatement(): PDOStatement
     {
         return $this->connection->prepare(sprintf(
@@ -92,11 +79,6 @@ class UserRepository
         ));
     }
 
-    /**
-     * Processes a single row from the CSV file
-     * @param array $data The CSV row data
-     * @param PDOStatement $stmt The prepared statement
-     */
     private function processCsvRow(array $data, PDOStatement $stmt): void
     {
         $data[self::CSV_INDEX_IS_ACTIVE] = $this->convertBooleanToInt($data[self::CSV_INDEX_IS_ACTIVE]);
