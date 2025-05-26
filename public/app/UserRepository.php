@@ -20,7 +20,6 @@ class UserRepository
     private const int CSV_HAS_CHILDREN = 6;
     private const int CSV_LENGTH = 1000;
     private const string CSV_DELIMITER = ',';
-    private const string TABLE_NAME = 'users';
 
     public function __construct(
         PDO $connection, 
