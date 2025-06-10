@@ -2,6 +2,7 @@
 <?php require_once __DIR__ . '/filter_form.php'; ?>
 
 <?php if (! empty($results)): ?>
+<div class="container mt-4">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -32,6 +33,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 <?php else: ?>
     <div class="alert alert-info">No results found.</div>
 <?php endif; ?>
