@@ -18,6 +18,8 @@ class Application
     private UserRepository $userRepository;
     private FilterPool $filterPool;
     private PDO $connection;
+    private FilterRegistry $filterRegistry;
+    private CsvParser $csvParser;
 
     public function __construct()
     {
@@ -44,17 +46,17 @@ class Application
     private function initializeFilters(): void
     {
         $this->filterPool = new FilterPool();
-        $registry = new FilterRegistry($this->filterPool);
-        $registry->register();
+        $this->filterRegistry = new FilterRegistry($this->filterPool);
+        $this->filterRegistry->register();
     }
 
     private function initializeRepositories(): void
     {
-        $csvParser = new CsvParser();
+        $this->csvParser = new CsvParser();
         $this->userRepository = new UserRepository(
             $this->connection,
             $this->filterPool,
-            $csvParser
+            $this->csvParser
         );
     }
 
@@ -72,5 +74,15 @@ class Application
     public function getUserRepository(): UserRepository
     {
         return $this->userRepository;
+    }
+
+    public function getFilterRegistry(): FilterRegistry
+    {
+        return $this->filterRegistry;
+    }
+
+    public function getCsvParser(): CsvParser
+    {
+        return $this->csvParser;
     }
 }

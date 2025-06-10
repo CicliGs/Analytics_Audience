@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Filter\FilterInteraction;
 
 use App\Filter\FilterInterface;
-use App\Filter\FilterInteraction\FilterStorage;
-use App\Filter\FilterInteraction\FilterApplier;
 
 class FilterPool implements FilterPoolInterface
 {

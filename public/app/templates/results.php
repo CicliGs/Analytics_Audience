@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/header.php'; ?>
 <?php require_once __DIR__ . '/filter_form.php'; ?>
 
-<?php if (!empty($results)): ?>
+<?php if (! empty($results)): ?>
     <table class="table table-striped">
         <thead>
         <tr>

@@ -17,8 +17,8 @@ class UserController
 
     public function index(): void
     {
-            $results = $this->app->handleRequest($_POST);
-            require_once __DIR__ . '/../templates/results.php';
-        
+        $results = $this->app->handleRequest($_POST);
+        require_once __DIR__ . '/../templates/results.php';
+
     }
-} 
+}
