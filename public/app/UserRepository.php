@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Filter\FilterData;
 use App\Filter\FilterInteraction\FilterPoolInterface;
 use Core\csv\CsvParserInterface;
 use PDO;
@@ -16,14 +15,12 @@ class UserRepository
     private FilterPoolInterface $filterPool;
     private CsvParserInterface $csvParser;
 
-    private const int CSV_INDEX_IS_ACTIVE = 2;
-    private const int CSV_HAS_CHILDREN = 6;
-    private const int CSV_LENGTH = 1000;
-    private const string CSV_DELIMITER = ',';
-    private const string TABLE_NAME = 'users';
+    public const CSV_INDEX_IS_ACTIVE = 2;
+    public const CSV_HAS_CHILDREN = 6;
+    public const CSV_LENGTH = 1000;
 
     public function __construct(
-        PDO $connection, 
+        PDO $connection,
         FilterPoolInterface $filterPool,
         CsvParserInterface $csvParser
     ) {
@@ -34,19 +31,42 @@ class UserRepository
 
     public function importFromCsv(string $csvFile): void
     {
-        $data = $this->csvParser->parse($csvFile);
-        $stmt = $this->prepareInsertStatement();
-
-        foreach ($data as $row) {
-            $stmt->execute($row);
+        $file = fopen($csvFile, 'r');
+        if (! $file) {
+            throw new \Exception("Failed to open CSV file.");
         }
+
+        fgetcsv($file);
+
+        while (($data = fgetcsv($file, self::CSV_LENGTH, ',')) !== false) {
+            if (count($data) < 9) {
+                continue;
+            }
+
+            $preparedData = [
+                $data[0],
+                $data[1],
+                ($data[self::CSV_INDEX_IS_ACTIVE] === 'true') ? 1 : 0,
+                $data[3],
+                $data[4],
+                $data[5],
+                ($data[self::CSV_HAS_CHILDREN] === 'true') ? 1 : 0,
+                $data[7],
+                $data[8],
+            ];
+
+            $stmt = $this->connection->prepare("INSERT INTO users (country, city, isActive, gender, birthDate, salary, hasChildren, familyStatus, registrationDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute($preparedData);
+        }
+
+        fclose($file);
     }
 
     public function filterUsers(): array
     {
         $query = "SELECT * FROM users";
         $query = $this->filterPool->applyFilters($query);
-        
+
         $stmt = $this->connection->query($query);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -90,5 +110,10 @@ class UserRepository
     private function convertBooleanToInt(string $value): int
     {
         return ($value === 'true') ? 1 : 0;
+    }
+
+    public function getFilterPool(): FilterPoolInterface
+    {
+        return $this->filterPool;
     }
 }

@@ -1,4 +1,4 @@
-<form method="POST" action="../../index.php" class="mb-4 p-4 border rounded shadow-sm bg-light">
+<form method="POST" action="/analyze" class="mb-4 p-4 border rounded shadow-sm bg-light">
     <div class="row mb-3">
         <div class="col">
             <input type="text" name="country" class="form-control" placeholder="Country" value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">

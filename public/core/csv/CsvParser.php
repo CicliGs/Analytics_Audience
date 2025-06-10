@@ -12,12 +12,11 @@ class CsvParser implements CsvParserInterface
     public function parse(string $filePath): array
     {
         $file = fopen($filePath, 'r');
-        if (!$file) {
+        if (! $file) {
             throw new \RuntimeException(sprintf('Failed to open CSV file: %s', $filePath));
         }
 
         try {
-            // Skip header row
             fgetcsv($file, self::CSV_LENGTH, self::CSV_DELIMITER);
 
             $data = [];
@@ -49,6 +48,7 @@ class CsvParser implements CsvParserInterface
     private function convertBooleanToInt(string $value): int
     {
         $value = strtolower($value);
+
         return in_array($value, ['true', '1', 'yes'], true) ? 1 : 0;
     }
-} 
+}
