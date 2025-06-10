@@ -1,4 +1,6 @@
-<form method="POST" action="/analyze" class="mb-4 p-4 border rounded shadow-sm bg-light">
+<div class="container mt-4">
+    <h1 class="mb-4">User Analytics</h1>
+    <form method="POST" action="/analyze" class="mb-4 p-4 border rounded shadow-sm bg-light">
     <div class="row mb-3">
         <div class="col">
             <input type="text" name="country" class="form-control" placeholder="Country" value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">
@@ -39,3 +41,4 @@
         </div>
     </div>
 </form>
+</div>

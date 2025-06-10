@@ -85,4 +85,9 @@ class Application
     {
         return $this->csvParser;
     }
+
+    public function getConnection(): PDO
+    {
+        return $this->connection;
+    }
 }
