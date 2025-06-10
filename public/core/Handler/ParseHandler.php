@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace Core\Handler;
 
+use App\CsvImporter;
 use App\UserRepository;
 use Core\csv\CsvParserInterface;
 
 class ParseHandler implements HandlerInterface
 {
-    private UserRepository $userRepository;
+    private UserRepository  $userRepository;
     private CsvParserInterface $csvParser;
+    private CsvImporter $csvImporter;
 
-    public function __construct(UserRepository $userRepository, CsvParserInterface $csvParser)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        CsvParserInterface $csvParser,
+        CsvImporter $csvImporter
+    ) {
         $this->userRepository = $userRepository;
         $this->csvParser = $csvParser;
+        $this->csvImporter = $csvImporter;
     }
 
     public function handle(): void
@@ -25,14 +31,14 @@ class ParseHandler implements HandlerInterface
 
             if ($file['error'] === UPLOAD_ERR_OK) {
                 $data = $this->csvParser->parse($file['tmp_name']);
-                $this->userRepository->importFromCsv($file['tmp_name']);
+                $this->csvImporter->importFromCsv($file['tmp_name']);
 
                 require __DIR__ . '/../../app/templates/parse_success.php';
 
                 return;
             }
         }
-
+        require __DIR__ . '/../../app/templates/header.php';
         require __DIR__ . '/../../app/templates/parse_form.php';
     }
 }
