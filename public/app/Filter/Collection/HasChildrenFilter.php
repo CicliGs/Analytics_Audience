@@ -10,7 +10,7 @@ class HasChildrenFilter extends AbstractFilter
 {
     public function getName(): string
     {
-        return 'haschildren';
+        return 'hasChildren';
     }
 
     public function getField(): string
@@ -20,11 +20,24 @@ class HasChildrenFilter extends AbstractFilter
 
     public function setValue(mixed $value): void
     {
+        if ($value === '' || $value === null || $value === 'all') {
+            $this->value = null;
+            return;
+        }
+
+        // Преобразуем значение в PostgreSQL формат
         if (is_string($value)) {
             $value = strtolower($value);
-            $this->value = in_array($value, ['true', '1', 'yes'], true);
-        } else {
-            $this->value = (bool)$value;
+            if (in_array($value, ['true', '1', 'yes', 't'], true)) {
+                $this->value = 't';
+                return;
+            }
+            if (in_array($value, ['false', '0', 'no', 'f'], true)) {
+                $this->value = 'f';
+                return;
+            }
         }
+
+        $this->value = $value;
     }
 }

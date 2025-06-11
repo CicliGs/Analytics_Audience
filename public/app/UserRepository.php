@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Filter\FilterInteraction\FilterPoolInterface;
+use App\Filter\FilterPoolInterface;
 use PDO;
 
 class UserRepository
 {
     private PDO $connection;
     private FilterPoolInterface $filterPool;
+
+    private const string DB_NAME = "users";
 
     public function __construct(
         PDO $connection,
@@ -22,9 +24,11 @@ class UserRepository
 
     public function filterUsers(): array
     {
-        $query = "SELECT * FROM users";
+        $query = sprintf('SELECT * FROM %s', self::DB_NAME);
         $query = $this->filterPool->applyFilters($query);
-
+        
+        error_log('Final SQL query: ' . $query);
+        
         $stmt = $this->connection->query($query);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

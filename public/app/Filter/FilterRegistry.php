@@ -10,7 +10,6 @@ use App\Filter\Collection\FamilyStatusFilter;
 use App\Filter\Collection\GenderFilter;
 use App\Filter\Collection\HasChildrenFilter;
 use App\Filter\Collection\IsActiveFilter;
-use App\Filter\FilterInteraction\FilterPoolInterface;
 
 class FilterRegistry implements FilterRegistryInterface
 {

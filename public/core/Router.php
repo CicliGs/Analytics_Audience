@@ -12,11 +12,13 @@ class Router
 
     public function __construct(
         private readonly HandlerInterface $analyzeHandler,
-        private readonly HandlerInterface $parseHandler
+        private readonly HandlerInterface $parseHandler,
+        private readonly HandlerInterface $generateHandler
     ) {
         $this->routes = [
             '/analyze' => $this->analyzeHandler,
             '/parse' => $this->parseHandler,
+            '/generate' => $this->generateHandler,
         ];
     }
 

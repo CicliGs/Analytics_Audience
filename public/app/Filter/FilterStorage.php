@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\FilterInteraction;
-
-use App\Filter\FilterInterface;
+namespace App\Filter;
 
 class FilterStorage implements FilterStorageInterface
 {

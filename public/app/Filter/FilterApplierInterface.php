@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\FilterInteraction;
+namespace App\Filter;
 
 interface FilterApplierInterface
 {
