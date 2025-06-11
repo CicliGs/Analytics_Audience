@@ -26,9 +26,9 @@ class UserRepository
     {
         $query = sprintf('SELECT * FROM %s', self::DB_NAME);
         $query = $this->filterPool->applyFilters($query);
-        
+
         error_log('Final SQL query: ' . $query);
-        
+
         $stmt = $this->connection->query($query);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

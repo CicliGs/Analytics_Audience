@@ -22,6 +22,7 @@ class IsActiveFilter extends AbstractFilter
     {
         if ($value === '' || $value === null || $value === 'all') {
             $this->value = null;
+
             return;
         }
 
@@ -29,10 +30,12 @@ class IsActiveFilter extends AbstractFilter
             $value = strtolower($value);
             if (in_array($value, ['true', '1', 'yes', 't'], true)) {
                 $this->value = 't';
+
                 return;
             }
             if (in_array($value, ['false', '0', 'no', 'f'], true)) {
                 $this->value = 'f';
+
                 return;
             }
         }

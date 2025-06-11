@@ -23,9 +23,11 @@ class GenderFilter extends AbstractFilter
         return 'ILIKE';
     }
 
-    public function setValue(mixed $value): void{
+    public function setValue(mixed $value): void
+    {
         if ($value === '' || $value === null || $value === 'all') {
             $this->value = null;
+
             return;
         }
         $this->value = '%' . $value . '%';

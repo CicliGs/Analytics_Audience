@@ -27,6 +27,7 @@ class CountryFilter extends AbstractFilter
     {
         if ($value === '' || $value === null || $value === 'all') {
             $this->value = null;
+
             return;
         }
 
