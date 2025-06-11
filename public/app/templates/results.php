@@ -35,7 +35,7 @@
     </table>
 </div>
 <?php else: ?>
-    <div class="alert alert-info">No results found.</div>
+    <div class="container mt-4 alert alert-info">No results found.</div>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

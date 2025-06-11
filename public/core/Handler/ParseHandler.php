@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Handler;
 
-use App\UserRepository;
 use App\CsvImporter;
+use App\UserRepository;
 use Core\csv\CsvParserInterface;
 
 class ParseHandler implements HandlerInterface
@@ -15,7 +15,7 @@ class ParseHandler implements HandlerInterface
     private CsvImporter $csvImporter;
 
     public function __construct(
-        UserRepository $userRepository, 
+        UserRepository $userRepository,
         CsvParserInterface $csvParser,
         CsvImporter $csvImporter
     ) {
@@ -34,6 +34,7 @@ class ParseHandler implements HandlerInterface
                 $this->csvImporter->importFromCsv($file['tmp_name']);
 
                 require __DIR__ . '/../../app/templates/parse_success.php';
+
                 return;
             }
         }

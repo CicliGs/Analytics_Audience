@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core;
 
-use App\Filter\FilterInteraction\FilterPool;
+use App\Filter\FilterPool;
 use App\Filter\FilterRegistry;
 use App\UserRepository;
 use Core\csv\CsvParser;

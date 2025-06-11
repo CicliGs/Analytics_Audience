@@ -21,6 +21,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/parse">Upload CSV</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/generate">Generate data</a>
+                    </li>
                 </ul>
             </div>
         </div>
