@@ -27,6 +27,7 @@ abstract class AbstractFilter implements FilterInterface
     {
         if ($value === '' || $value === null || $value === 'all') {
             $this->value = null;
+
             return;
         }
 

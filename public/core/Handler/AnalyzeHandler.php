@@ -19,7 +19,7 @@ class AnalyzeHandler implements HandlerInterface
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log('POST data received: ' . print_r($_POST, true));
-            
+
             foreach ($_POST as $key => $value) {
                 if ($filter = $this->userRepository->getFilterPool()->getFilter($key)) {
                     error_log(sprintf('Applying filter for %s with value %s', $key, $value));

@@ -55,6 +55,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     private function convertToPostgresBoolean(string $value): string
     {
         $value = strtolower($value);
+
         return in_array($value, ['true', '1', 'yes'], true) ? 't' : 'f';
     }
 }
