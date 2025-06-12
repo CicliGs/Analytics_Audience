@@ -1,0 +1,21 @@
+country,city,isActive,gender,birthDate,salary,hasChildren,familyStatus,registrationDate
+USA,New York,1,Male,1990-01-15,50000,1,Married,2020-05-10
+Canada,Toronto,0,Female,1985-07-22,60000,0,Single,2019-08-15
+Germany,Berlin,1,Male,1988-03-10,55000,1,Married,2021-02-15
+France,Paris,0,Female,1992-11-25,48000,0,Single,2022-07-20
+UK,London,1,Female,1980-05-30,70000,1,Divorced,2018-09-12
+Australia,Sydney,0,Male,1995-08-17,62000,0,Single,2023-01-05
+Japan,Tokyo,1,Male,1987-12-01,58000,1,Married,2020-11-30
+Brazil,Sao Paulo,0,Female,1993-04-22,53000,0,Single,2021-06-18
+India,Mumbai,1,Male,1982-07-19,45000,1,Married,2019-03-25
+Russia,Moscow,0,Female,1991-09-14,67000,0,Single,2022-04-10
+Italy,Rome,1,Male,1986-02-28,59000,1,Married,2020-08-22
+Spain,Madrid,0,Female,1994-06-12,51000,0,Single,2023-03-15
+China,Beijing,1,Male,1983-10-05,64000,1,Married,2021-12-01
+South Korea,Seoul,0,Female,1996-01-20,56000,0,Single,2022-09-10
+Mexico,Mexico City,1,Male,1989-08-08,57000,1,Married,2020-04-05
+Argentina,Buenos Aires,0,Female,1997-03-03,49000,0,Single,2023-05-20
+South Africa,Cape Town,1,Male,1984-12-12,66000,1,Married,2021-10-15
+Egypt,Cairo,0,Female,1998-07-07,54000,0,Single,2022-12-01
+Turkey,Istanbul,1,Male,1981-05-25,60000,1,Married,2019-11-10
+Netherlands,Amsterdam,0,Female,1999-09-09,52000,0,Single,2023-07-05
