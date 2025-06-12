@@ -55,30 +55,13 @@ class Application
         $this->csvParser = new CsvParser();
         $this->userRepository = new UserRepository(
             $this->connection,
-            $this->filterPool,
-            $this->csvParser
+            $this->filterPool
         );
-    }
-
-    public function handleRequest(array $request): array
-    {
-        foreach ($request as $key => $value) {
-            if ($filter = $this->filterPool->getFilter($key)) {
-                $filter->setValue($value);
-            }
-        }
-
-        return $this->userRepository->filterUsers();
     }
 
     public function getUserRepository(): UserRepository
     {
         return $this->userRepository;
-    }
-
-    public function getFilterRegistry(): FilterRegistry
-    {
-        return $this->filterRegistry;
     }
 
     public function getCsvParser(): CsvParser

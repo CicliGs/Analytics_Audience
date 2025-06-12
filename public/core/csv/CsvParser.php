@@ -9,6 +9,9 @@ class CsvParser implements CsvParserInterface
     private const CSV_LENGTH = 1000;
     private const CSV_DELIMITER = ',';
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function parse(string $filePath): array
     {
         $file = fopen($filePath, 'r');
@@ -30,6 +33,10 @@ class CsvParser implements CsvParserInterface
         }
     }
 
+    /**
+     * @param array<int, string|null> $row
+     * @return array<string, mixed>
+     */
     private function processRow(array $row): array
     {
         return [

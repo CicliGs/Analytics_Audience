@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Core\Application;
-use Core\Router;
-use Core\Handler\AnalyzeHandler;
-use Core\Handler\ParseHandler;
-use Core\Handler\GenerateHandler;
 use App\CsvImporter;
+use Core\Application;
+use Core\Handler\AnalyzeHandler;
+use Core\Handler\GenerateHandler;
+use Core\Handler\ParseHandler;
+use Core\Router;
 
 $app = new Application();
 
 $analyzeHandler = new AnalyzeHandler($app->getUserRepository());
 $csvImporter = new CsvImporter($app->getConnection());
-$parseHandler = new ParseHandler($app->getUserRepository(), $app->getCsvParser(), $csvImporter);
+$parseHandler = new ParseHandler($app->getCsvParser(), $csvImporter);
 $generateHandler = new GenerateHandler();
 
 $router = new Router($analyzeHandler, $parseHandler, $generateHandler);

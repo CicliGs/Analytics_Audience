@@ -9,6 +9,7 @@ class FilterPool implements FilterPoolInterface
     private FilterStorageInterface $storage;
     private FilterApplierInterface $applier;
 
+    //TODO убрать new создать все объекты index.php
     public function __construct()
     {
         $this->storage = new FilterStorage();

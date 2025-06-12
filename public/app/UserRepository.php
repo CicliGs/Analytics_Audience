@@ -9,19 +9,17 @@ use PDO;
 
 class UserRepository
 {
-    private PDO $connection;
-    private FilterPoolInterface $filterPool;
-
-    private const string DB_NAME = "users";
+    private const string DB_NAME = 'users';
 
     public function __construct(
-        PDO $connection,
-        FilterPoolInterface $filterPool
+        private PDO $connection,
+        private FilterPoolInterface $filterPool
     ) {
-        $this->connection = $connection;
-        $this->filterPool = $filterPool;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function filterUsers(): array
     {
         $query = sprintf('SELECT * FROM %s', self::DB_NAME);
@@ -30,11 +28,20 @@ class UserRepository
         error_log('Final SQL query: ' . $query);
 
         $stmt = $this->connection->query($query);
+
+        if ($stmt === false) {
+            throw new \RuntimeException('Database query failed.');
+        }
+
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map([$this, 'mapDbRowToCamelCase'], $rows);
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     private function mapDbRowToCamelCase(array $row): array
     {
         return [

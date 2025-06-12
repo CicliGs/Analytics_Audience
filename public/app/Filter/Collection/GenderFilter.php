@@ -30,6 +30,7 @@ class GenderFilter extends AbstractFilter
 
             return;
         }
+
         $this->value = '%' . $value . '%';
     }
 }

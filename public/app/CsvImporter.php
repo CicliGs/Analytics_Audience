@@ -6,6 +6,7 @@ namespace App;
 
 use PDO;
 
+//TODO refactor
 class CsvImporter
 {
     private const CSV_INDEX_IS_ACTIVE = 2;
@@ -34,11 +35,11 @@ class CsvImporter
             $preparedData = [
                 $data[0],
                 $data[1],
-                $this->convertToPostgresBoolean($data[self::CSV_INDEX_IS_ACTIVE]),
+                $this->convertToPostgresBoolean($data[self::CSV_INDEX_IS_ACTIVE] ?? ''),
                 $data[3],
                 $data[4],
                 $data[5],
-                $this->convertToPostgresBoolean($data[self::CSV_HAS_CHILDREN]),
+                $this->convertToPostgresBoolean($data[self::CSV_HAS_CHILDREN] ?? ''),
                 $data[7],
                 $data[8],
             ];
@@ -52,8 +53,12 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         fclose($file);
     }
 
-    private function convertToPostgresBoolean(string $value): string
+    private function convertToPostgresBoolean(?string $value): string
     {
+        if ($value === null) {
+            return 'f';
+        }
+
         $value = strtolower($value);
 
         return in_array($value, ['true', '1', 'yes'], true) ? 't' : 'f';

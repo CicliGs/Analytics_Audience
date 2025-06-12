@@ -8,6 +8,9 @@ use Core\Handler\HandlerInterface;
 
 class Router
 {
+    /**
+     * @var array<string, HandlerInterface>
+     */
     private array $routes = [];
 
     public function __construct(

@@ -10,5 +10,8 @@ interface FilterStorageInterface
 
     public function getFilter(string $name): ?FilterInterface;
 
+    /**
+     * @return array<string, FilterInterface>
+     */
     public function getAllFilters(): array;
 }

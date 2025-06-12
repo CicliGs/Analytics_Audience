@@ -65,7 +65,6 @@ class GenerateHandler implements HandlerInterface
             throw new RuntimeException('Failed to open CSV file for writing');
         }
 
-        // Write header
         fputcsv($file, [
             'country',
             'city',

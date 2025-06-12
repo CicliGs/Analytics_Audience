@@ -5,23 +5,16 @@ declare(strict_types=1);
 namespace Core\Handler;
 
 use App\CsvImporter;
-use App\UserRepository;
 use Core\csv\CsvParserInterface;
 
 class ParseHandler implements HandlerInterface
 {
-    private UserRepository $userRepository;
-    private CsvParserInterface $csvParser;
-    private CsvImporter $csvImporter;
-
+    //TODO все должно быть в конструкторе без создания полей php8
     public function __construct(
-        UserRepository $userRepository,
-        CsvParserInterface $csvParser,
-        CsvImporter $csvImporter
+        private CsvParserInterface $csvParser,
+        private CsvImporter $csvImporter
     ) {
-        $this->userRepository = $userRepository;
-        $this->csvParser = $csvParser;
-        $this->csvImporter = $csvImporter;
+
     }
 
     public function handle(): void
