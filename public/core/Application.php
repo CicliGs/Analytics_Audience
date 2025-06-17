@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Core;
 
+use App\Filter\FilterApplier;
 use App\Filter\FilterPool;
 use App\Filter\FilterRegistry;
+use App\Filter\FilterStorage;
 use App\UserRepository;
 use Core\csv\CsvParser;
 use Core\Database\DatabaseConfig;
@@ -18,8 +20,9 @@ class Application
     private UserRepository $userRepository;
     private FilterPool $filterPool;
     private PDO $connection;
-    private FilterRegistry $filterRegistry;
     private CsvParser $csvParser;
+
+    private FilterApplier $filterApplier;
 
     public function __construct()
     {
@@ -45,9 +48,11 @@ class Application
 
     private function initializeFilters(): void
     {
-        $this->filterPool = new FilterPool();
-        $this->filterRegistry = new FilterRegistry($this->filterPool);
-        $this->filterRegistry->register();
+        $filterStorage = new FilterStorage();
+        $this->filterApplier = new FilterApplier($filterStorage);
+        $this->filterPool = new FilterPool($filterStorage, $this->filterApplier);
+        $filterRegistry = new FilterRegistry($this->filterPool);
+        $filterRegistry->register();
     }
 
     private function initializeRepositories(): void

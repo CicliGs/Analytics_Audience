@@ -6,8 +6,9 @@ namespace App;
 
 use App\Filter\FilterPoolInterface;
 use PDO;
+use RuntimeException as RuntimeExceptionAlias;
 
-class UserRepository
+readonly class UserRepository
 {
     private const string DB_NAME = 'users';
 
@@ -30,7 +31,7 @@ class UserRepository
         $stmt = $this->connection->query($query);
 
         if ($stmt === false) {
-            throw new \RuntimeException('Database query failed.');
+            throw new RuntimeExceptionAlias('Database query failed.');
         }
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

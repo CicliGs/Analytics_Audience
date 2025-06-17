@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filter;
 
-class FilterPool implements FilterPoolInterface
+readonly class FilterPool implements FilterPoolInterface
 {
-    private FilterStorageInterface $storage;
-    private FilterApplierInterface $applier;
-
     //TODO убрать new создать все объекты index.php
-    public function __construct()
-    {
-        $this->storage = new FilterStorage();
-        $this->applier = new FilterApplier($this->storage);
+    public function __construct(
+        private FilterStorageInterface $storage,
+        private FilterApplierInterface $applier
+    ) {
     }
 
     public function addFilter(FilterInterface $filter): void

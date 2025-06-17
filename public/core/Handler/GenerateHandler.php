@@ -10,7 +10,7 @@ use RuntimeException;
 
 class GenerateHandler implements HandlerInterface
 {
-    private Generator $faker;
+    private readonly Generator $faker;
     private const string CSV_FILE_PATH = '/var/www/html/data/users.csv';
 
     public function __construct()
@@ -43,13 +43,11 @@ class GenerateHandler implements HandlerInterface
             $uploadedFile = $_FILES['csv_file']['tmp_name'];
             $targetPath = self::CSV_FILE_PATH;
 
-            // Ensure the data directory exists
             $dir = dirname($targetPath);
             if (! is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
 
-            // Move uploaded file to target location
             move_uploaded_file($uploadedFile, $targetPath);
 
             return $targetPath;

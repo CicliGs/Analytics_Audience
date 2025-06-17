@@ -6,20 +6,28 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\CsvImporter;
 use Core\Application;
-use Core\Handler\AnalyzeHandler;
-use Core\Handler\GenerateHandler;
-use Core\Handler\ParseHandler;
-use Core\Router;
+use Core\Handler\HandlerFactory;
+use Core\Router\Router;
 
 $app = new Application();
 
-$analyzeHandler = new AnalyzeHandler($app->getUserRepository());
 $csvImporter = new CsvImporter($app->getConnection());
-$parseHandler = new ParseHandler($app->getCsvParser(), $csvImporter);
-$generateHandler = new GenerateHandler();
 
-$router = new Router($analyzeHandler, $parseHandler, $generateHandler);
+$handlerFactory = new HandlerFactory(
+    $app->getUserRepository(),
+    $app->getCsvParser(),
+    $csvImporter
+);
+
+$router = new Router($handlerFactory);
+
+$routes = require __DIR__ . '/core/Router/routes.php';
+
+foreach ($routes as $route) {
+    $router->addRoute($route);
+}
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$method = $_SERVER['REQUEST_METHOD'];
 
-$router->route($path);
+$router->route($path, $method);

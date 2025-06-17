@@ -6,13 +6,13 @@ namespace Core\Handler;
 
 use App\CsvImporter;
 use Core\csv\CsvParserInterface;
+use Exception;
 
-class ParseHandler implements HandlerInterface
+readonly class ParseHandler implements HandlerInterface
 {
-    //TODO все должно быть в конструкторе без создания полей php8
     public function __construct(
         private CsvParserInterface $csvParser,
-        private CsvImporter $csvImporter
+        private CsvImporter        $csvImporter
     ) {
 
     }
@@ -24,7 +24,12 @@ class ParseHandler implements HandlerInterface
 
             if ($file['error'] === UPLOAD_ERR_OK) {
                 $data = $this->csvParser->parse($file['tmp_name']);
-                $this->csvImporter->importFromCsv($file['tmp_name']);
+
+                try {
+                    $this->csvImporter->importFromCsv($file['tmp_name']);
+                } catch (Exception $e) {
+
+                }
 
                 require __DIR__ . '/../../app/templates/parse_success.php';
 

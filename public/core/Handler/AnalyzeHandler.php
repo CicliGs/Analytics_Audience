@@ -6,13 +6,11 @@ namespace Core\Handler;
 
 use App\UserRepository;
 
-class AnalyzeHandler implements HandlerInterface
+readonly class AnalyzeHandler implements HandlerInterface
 {
-    private UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private UserRepository $userRepository
+    ) {
     }
 
     public function handle(): void

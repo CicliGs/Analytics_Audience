@@ -11,13 +11,11 @@ use App\Filter\Collection\GenderFilter;
 use App\Filter\Collection\HasChildrenFilter;
 use App\Filter\Collection\IsActiveFilter;
 
-class FilterRegistry implements FilterRegistryInterface
+readonly class FilterRegistry implements FilterRegistryInterface
 {
-    private FilterPoolInterface $filterPool;
-
-    public function __construct(FilterPoolInterface $filterPool)
-    {
-        $this->filterPool = $filterPool;
+    public function __construct(
+        private FilterPoolInterface $filterPool
+    ) {
     }
 
     public function register(): void
