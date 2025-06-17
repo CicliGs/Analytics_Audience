@@ -4,54 +4,44 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Filter\FilterData;
-use App\Filter\FilterInteraction\FilterPoolInterface;
-use Core\csv\CsvParserInterface;
+use App\Filter\FilterPoolInterface;
 use PDO;
-use PDOStatement;
 
 class UserRepository
 {
-    private PDO $connection;
-    private FilterPoolInterface $filterPool;
-    private CsvParserInterface $csvParser;
-
-    private const int CSV_INDEX_IS_ACTIVE = 2;
-    private const int CSV_HAS_CHILDREN = 6;
-    private const int CSV_LENGTH = 1000;
-    private const string CSV_DELIMITER = ',';
+    private const string DB_NAME = 'users';
 
     public function __construct(
-        PDO $connection, 
-        FilterPoolInterface $filterPool,
-        CsvParserInterface $csvParser
+        private PDO $connection,
+        private FilterPoolInterface $filterPool
     ) {
-        $this->connection = $connection;
-        $this->filterPool = $filterPool;
-        $this->csvParser = $csvParser;
     }
 
-    public function importFromCsv(string $csvFile): void
-    {
-        $data = $this->csvParser->parse($csvFile);
-        $stmt = $this->prepareInsertStatement();
-
-        foreach ($data as $row) {
-            $stmt->execute($row);
-        }
-    }
-
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function filterUsers(): array
     {
-        $query = "SELECT * FROM users";
+        $query = sprintf('SELECT * FROM %s', self::DB_NAME);
         $query = $this->filterPool->applyFilters($query);
-        
+
+        error_log('Final SQL query: ' . $query);
+
         $stmt = $this->connection->query($query);
+
+        if ($stmt === false) {
+            throw new \RuntimeException('Database query failed.');
+        }
+
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map([$this, 'mapDbRowToCamelCase'], $rows);
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     private function mapDbRowToCamelCase(array $row): array
     {
         return [
@@ -67,27 +57,8 @@ class UserRepository
         ];
     }
 
-    private function prepareInsertStatement(): PDOStatement
+    public function getFilterPool(): FilterPoolInterface
     {
-        return $this->connection->prepare(sprintf(
-            "INSERT INTO users (
-                country, city, isActive, gender, birthDate, 
-                salary, hasChildren, familyStatus, registrationDate
-            ) VALUES (%s)",
-            implode(', ', array_fill(0, 9, '?'))
-        ));
-    }
-
-    private function processCsvRow(array $data, PDOStatement $stmt): void
-    {
-        $data[self::CSV_INDEX_IS_ACTIVE] = $this->convertBooleanToInt($data[self::CSV_INDEX_IS_ACTIVE]);
-        $data[self::CSV_HAS_CHILDREN] = $this->convertBooleanToInt($data[self::CSV_HAS_CHILDREN]);
-
-        $stmt->execute($data);
-    }
-
-    private function convertBooleanToInt(string $value): int
-    {
-        return ($value === 'true') ? 1 : 0;
+        return $this->filterPool;
     }
 }

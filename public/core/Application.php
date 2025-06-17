@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core;
 
-use App\Filter\FilterInteraction\FilterPool;
+use App\Filter\FilterPool;
 use App\Filter\FilterRegistry;
 use App\UserRepository;
 use Core\csv\CsvParser;
@@ -18,6 +18,8 @@ class Application
     private UserRepository $userRepository;
     private FilterPool $filterPool;
     private PDO $connection;
+    private FilterRegistry $filterRegistry;
+    private CsvParser $csvParser;
 
     public function __construct()
     {
@@ -44,33 +46,31 @@ class Application
     private function initializeFilters(): void
     {
         $this->filterPool = new FilterPool();
-        $registry = new FilterRegistry($this->filterPool);
-        $registry->register();
+        $this->filterRegistry = new FilterRegistry($this->filterPool);
+        $this->filterRegistry->register();
     }
 
     private function initializeRepositories(): void
     {
-        $csvParser = new CsvParser();
+        $this->csvParser = new CsvParser();
         $this->userRepository = new UserRepository(
             $this->connection,
-            $this->filterPool,
-            $csvParser
+            $this->filterPool
         );
-    }
-
-    public function handleRequest(array $request): array
-    {
-        foreach ($request as $key => $value) {
-            if ($filter = $this->filterPool->getFilter($key)) {
-                $filter->setValue($value);
-            }
-        }
-
-        return $this->userRepository->filterUsers();
     }
 
     public function getUserRepository(): UserRepository
     {
         return $this->userRepository;
+    }
+
+    public function getCsvParser(): CsvParser
+    {
+        return $this->csvParser;
+    }
+
+    public function getConnection(): PDO
+    {
+        return $this->connection;
     }
 }

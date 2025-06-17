@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\FilterInteraction;
+namespace App\Filter;
 
-use App\Filter\FilterInterface;
-
-interface FilterPoolInterface
+interface FilterStorageInterface
 {
     public function addFilter(FilterInterface $filter): void;
 
     public function getFilter(string $name): ?FilterInterface;
 
-    public function applyFilters(string $query): string;
+    /**
+     * @return array<string, FilterInterface>
+     */
+    public function getAllFilters(): array;
 }

@@ -25,6 +25,12 @@ abstract class AbstractFilter implements FilterInterface
 
     public function setValue(mixed $value): void
     {
+        if ($value === '' || $value === null || $value === 'all') {
+            $this->value = null;
+
+            return;
+        }
+
         $this->value = $value;
     }
 
@@ -39,10 +45,12 @@ abstract class AbstractFilter implements FilterInterface
         $value = $this->formatValue($this->value);
 
         if (! str_contains($query, 'WHERE')) {
-            return sprintf('%s WHERE %s %s %s', $query, $field, $operator, $value);
+            $newQuery = sprintf('%s WHERE %s %s %s', $query, $field, $operator, $value);
+        } else {
+            $newQuery = sprintf('%s AND %s %s %s', $query, $field, $operator, $value);
         }
 
-        return sprintf('%s AND %s %s %s', $query, $field, $operator, $value);
+        return $newQuery;
     }
 
     protected function formatValue(mixed $value): string
@@ -56,16 +64,17 @@ abstract class AbstractFilter implements FilterInterface
 
             if (is_string($value)) {
                 $value = strtolower($value);
-                if ($value === 'true' || $value === '1') {
+                if (in_array($value, ['true', '1', 'yes', 't'], true)) {
                     return 'TRUE';
                 }
-                if ($value === 'false' || $value === '0') {
+                if (in_array($value, ['false', '0', 'no', 'f'], true)) {
                     return 'FALSE';
                 }
             }
 
-            return $value ? 'TRUE' : 'FALSE';
+            return sprintf("'%s'", $value);
         }
+
         if (is_string($value)) {
             return sprintf("'%s'", $value);
         }

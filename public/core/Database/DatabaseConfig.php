@@ -12,6 +12,10 @@ class DatabaseConfig
     private string $database;
     private string $username;
     private string $password;
+
+    /**
+     * @var array<int, mixed>
+     */
     private array $options;
 
     public function __construct()
@@ -51,6 +55,9 @@ class DatabaseConfig
         return $this->password;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;

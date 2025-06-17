@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\FilterInteraction;
-
-use App\Filter\FilterInterface;
-use App\Filter\FilterInteraction\FilterStorage;
-use App\Filter\FilterInteraction\FilterApplier;
+namespace App\Filter;
 
 class FilterPool implements FilterPoolInterface
 {
     private FilterStorageInterface $storage;
     private FilterApplierInterface $applier;
 
+    //TODO убрать new создать все объекты index.php
     public function __construct()
     {
         $this->storage = new FilterStorage();

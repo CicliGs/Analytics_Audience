@@ -1,4 +1,6 @@
-<form method="POST" action="../../index.php" class="mb-4 p-4 border rounded shadow-sm bg-light">
+<div class="container mt-4">
+    <h1 class="mb-4">User Analytics</h1>
+    <form method="POST" action="/analyze" class="mb-4 p-4 border rounded shadow-sm bg-light">
     <div class="row mb-3">
         <div class="col">
             <input type="text" name="country" class="form-control" placeholder="Country" value="<?= htmlspecialchars($_POST['country'] ?? '') ?>">
@@ -8,9 +10,9 @@
         </div>
         <div class="col">
             <select name="isActive" class="form-control">
-                <option value="">Is Active</option>
-                <option value="true" <?= ($_POST['isActive'] ?? '') === 'true' ? 'selected' : '' ?>>Yes</option>
-                <option value="false" <?= ($_POST['isActive'] ?? '') === 'false' ? 'selected' : '' ?>>No</option>
+                <option value="all">All</option>
+                <option value="t" <?= ($_POST['isActive'] ?? '') === 't' ? 'selected' : '' ?>>Yes</option>
+                <option value="f" <?= ($_POST['isActive'] ?? '') === 'f' ? 'selected' : '' ?>>No</option>
             </select>
         </div>
     </div>
@@ -22,9 +24,9 @@
     <div class="row mb-3">
         <div class="col">
             <select name="hasChildren" class="form-control">
-                <option value="">Has Children</option>
-                <option value="true" <?= ($_POST['hasChildren'] ?? '') === 'true' ? 'selected' : '' ?>>Yes</option>
-                <option value="false" <?= ($_POST['hasChildren'] ?? '') === 'false' ? 'selected' : '' ?>>No</option>
+                <option value="all">All</option>
+                <option value="t" <?= ($_POST['hasChildren'] ?? '') === 't' ? 'selected' : '' ?>>Yes</option>
+                <option value="f" <?= ($_POST['hasChildren'] ?? '') === 'f' ? 'selected' : '' ?>>No</option>
             </select>
         </div>
     </div>
@@ -39,3 +41,4 @@
         </div>
     </div>
 </form>
+</div>

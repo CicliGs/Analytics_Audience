@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\FilterInteraction;
-
-use App\Filter\FilterInterface;
+namespace App\Filter;
 
 class FilterStorage implements FilterStorageInterface
 {
+    /**
+     * @var array<string, FilterInterface>
+     */
     private array $filters = [];
 
     public function addFilter(FilterInterface $filter): void
@@ -20,6 +21,9 @@ class FilterStorage implements FilterStorageInterface
         return $this->filters[$name] ?? null;
     }
 
+    /**
+     * @return array<string, FilterInterface>
+     */
     public function getAllFilters(): array
     {
         return $this->filters;

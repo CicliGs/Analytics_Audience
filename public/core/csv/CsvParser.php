@@ -9,15 +9,17 @@ class CsvParser implements CsvParserInterface
     private const CSV_LENGTH = 1000;
     private const CSV_DELIMITER = ',';
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function parse(string $filePath): array
     {
         $file = fopen($filePath, 'r');
-        if (!$file) {
+        if (! $file) {
             throw new \RuntimeException(sprintf('Failed to open CSV file: %s', $filePath));
         }
 
         try {
-            // Skip header row
             fgetcsv($file, self::CSV_LENGTH, self::CSV_DELIMITER);
 
             $data = [];
@@ -31,6 +33,10 @@ class CsvParser implements CsvParserInterface
         }
     }
 
+    /**
+     * @param array<int, string|null> $row
+     * @return array<string, mixed>
+     */
     private function processRow(array $row): array
     {
         return [
@@ -49,6 +55,7 @@ class CsvParser implements CsvParserInterface
     private function convertBooleanToInt(string $value): int
     {
         $value = strtolower($value);
+
         return in_array($value, ['true', '1', 'yes'], true) ? 1 : 0;
     }
-} 
+}
