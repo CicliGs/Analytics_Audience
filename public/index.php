@@ -11,15 +11,19 @@ use App\Controllers\ParseController;
 use App\Models\UserRepository;
 use App\Router\Router;
 use App\Services\CsvImporter;
+use App\Services\CsvGeneratorService;
+use App\Services\FileService;
 
 $app = new Application();
 
 $userRepository = new UserRepository($app->getConnection(), $app->getFilterPool());
 $csvImporter = new CsvImporter($app->getConnection());
+$csvGeneratorService = new CsvGeneratorService();
+$fileService = new FileService();
 
 $analyzeController = new AnalyzeController($userRepository);
 $parseController = new ParseController($csvImporter);
-$generateController = new GenerateController();
+$generateController = new GenerateController($csvGeneratorService, $fileService);
 
 $controllers = [
     AnalyzeController::class => $analyzeController,
