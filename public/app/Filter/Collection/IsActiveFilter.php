@@ -15,7 +15,7 @@ class IsActiveFilter extends AbstractFilter
 
     public function getField(): string
     {
-        return 'isactive';
+        return 'is_active';
     }
 
     public function setValue(mixed $value): void

@@ -6,7 +6,6 @@ namespace App\Filter;
 
 readonly class FilterPool implements FilterPoolInterface
 {
-    //TODO убрать new создать все объекты index.php
     public function __construct(
         private FilterStorageInterface $storage,
         private FilterApplierInterface $applier

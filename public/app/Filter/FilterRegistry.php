@@ -6,7 +6,7 @@ namespace App\Filter;
 
 use App\Filter\Collection\CityFilter;
 use App\Filter\Collection\CountryFilter;
-use App\Filter\Collection\FamilyStatusFilter;
+use App\Filter\Collection\FamilyFilter;
 use App\Filter\Collection\GenderFilter;
 use App\Filter\Collection\HasChildrenFilter;
 use App\Filter\Collection\IsActiveFilter;
@@ -25,6 +25,6 @@ readonly class FilterRegistry implements FilterRegistryInterface
         $this->filterPool->addFilter(new IsActiveFilter());
         $this->filterPool->addFilter(new GenderFilter());
         $this->filterPool->addFilter(new HasChildrenFilter());
-        $this->filterPool->addFilter(new FamilyStatusFilter());
+        $this->filterPool->addFilter(new FamilyFilter());
     }
 }
