@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\UserCsvImporter;
 use App\Router\RouteAttribute;
-use App\Services\CsvImporter;
 
 class ParseController extends Controller
 {
     public function __construct(
-        private readonly CsvImporter $csvImporter
+        private readonly UserCsvImporter $csvImporter
     ) {
     }
 

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Models;
 
 use PDO;
 
-class CsvImporter
+class UserCsvImporter
 {
     private const int CSV_INDEX_IS_ACTIVE = 2;
     private const int CSV_HAS_CHILDREN = 6;
     private const int CSV_LENGTH = 1000;
-
     private const string DBNAME = 'users';
 
     public function __construct(
