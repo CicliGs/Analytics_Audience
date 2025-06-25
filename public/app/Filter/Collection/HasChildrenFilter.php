@@ -15,7 +15,7 @@ class HasChildrenFilter extends AbstractFilter
 
     public function getField(): string
     {
-        return 'haschildren';
+        return 'has_children';
     }
 
     public function setValue(mixed $value): void
@@ -26,7 +26,6 @@ class HasChildrenFilter extends AbstractFilter
             return;
         }
 
-        // Преобразуем значение в PostgreSQL формат
         if (is_string($value)) {
             $value = strtolower($value);
             if (in_array($value, ['true', '1', 'yes', 't'], true)) {

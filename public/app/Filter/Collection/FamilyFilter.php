@@ -6,7 +6,7 @@ namespace App\Filter\Collection;
 
 use App\Filter\AbstractFilter;
 
-class FamilyStatusFilter extends AbstractFilter
+class FamilyFilter extends AbstractFilter
 {
     public function getName(): string
     {

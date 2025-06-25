@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filter;
 
-class FilterApplier implements FilterApplierInterface
+readonly class FilterApplier implements FilterApplierInterface
 {
-    private FilterStorageInterface $storage;
-
-    public function __construct(FilterStorageInterface $storage)
-    {
-        $this->storage = $storage;
+    public function __construct(
+        private FilterStorageInterface $storage
+    ) {
     }
 
     public function applyFilters(string $query): string

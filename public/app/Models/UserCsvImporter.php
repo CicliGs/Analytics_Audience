@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use PDO;
 
-//TODO refactor
-class CsvImporter
+class UserCsvImporter
 {
-    private const CSV_INDEX_IS_ACTIVE = 2;
-    private const CSV_HAS_CHILDREN = 6;
-    private const CSV_LENGTH = 1000;
+    private const int CSV_INDEX_IS_ACTIVE = 2;
+    private const int CSV_HAS_CHILDREN = 6;
+    private const int CSV_LENGTH = 1000;
+    private const string DBNAME = 'users';
 
     public function __construct(
-        private PDO $connection
+        private readonly PDO $connection
     ) {
     }
 
@@ -22,7 +22,7 @@ class CsvImporter
     {
         $file = fopen($csvFile, 'r');
         if (! $file) {
-            throw new \Exception("Failed to open CSV file.");
+            throw new \Exception('Failed to open CSV file.');
         }
 
         fgetcsv($file);
@@ -44,9 +44,9 @@ class CsvImporter
                 $data[8],
             ];
 
-            $stmt = $this->connection->prepare("INSERT INTO users 
-    (country, city, isActive, gender, birthDate, salary, hasChildren, familyStatus, registrationDate)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $this->connection->prepare(sprintf('INSERT INTO %s 
+    (country, city, is_active, gender, birth_date, salary, has_children, family_status, registration_date)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', self::DBNAME));
             $stmt->execute($preparedData);
         }
 
